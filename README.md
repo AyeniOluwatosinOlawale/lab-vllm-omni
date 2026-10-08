@@ -7,7 +7,7 @@ A phased, standalone lab for exploring every capability of [vLLM-Omni](https://g
 | Phase | Focus | Output Modality |
 |---|---|---|
 | 0 | Environment setup & smoke test | — |
-| 1 | AR + Audio pipeline (Qwen3-Omni): full-duplex, stage pipelining, all input modalities, concurrency, context length | Text + Audio |
+| 1 | AR + Audio pipeline (Qwen3-Omni): unified baseline, async chunk, all input modalities, concurrency, context length, full-duplex VAD UI, **staged 3-process launch**, async chunk offline, text-only vs text+audio output path, stage profiler | Text + Audio |
 | 2 | DiT image generation: text-to-image, image editing, CFG parallel | Image |
 | 3 | Diffusion video: text-to-video, image-to-video, speech-to-video | Video |
 | 4 | TTS pipeline: voice clone, voice design, concurrency cliff, quality eval | Audio only |
@@ -19,14 +19,44 @@ A phased, standalone lab for exploring every capability of [vLLM-Omni](https://g
 ```
 lab-vllm-omni/
 ├── phase0-setup/
+│   └── verify.sh
 ├── phase1-ar-audio/
-│   └── configs/          # deploy YAML overlays
+│   ├── configs/                    # deploy YAML overlays
+│   │   ├── ctx_8k.yaml
+│   │   ├── ctx_32k.yaml
+│   │   ├── ctx_64k.yaml
+│   │   └── qwen3_vad.yaml
+│   ├── lab1_baseline.sh            # unified sync serving baseline
+│   ├── lab2_async_chunk.sh         # async chunk stage pipelining gain
+│   ├── lab3_all_modalities.sh      # all 7 input modality types
+│   ├── lab4_concurrency_sweep.sh   # concurrency c=1→32
+│   ├── lab5_context_sweep.sh       # context length 8K/32K/64K
+│   ├── lab6_realtime_ui.sh         # full-duplex VAD + camera web UI
+│   ├── lab7_staged_launch.sh       # 3-process disaggregated launch
+│   ├── lab8_async_chunk_offline.sh # async chunk offline (AsyncOmni)
+│   ├── lab9_text_vs_audio_output.sh# text-only vs text+audio cost
+│   └── lab10_stage_profiler.sh     # per-stage PyTorch trace
 ├── phase2-image/
+│   ├── lab1_text_to_image.sh
+│   ├── lab2_image_edit.sh
+│   ├── lab3_concurrency_resolution.sh
+│   └── lab4_multi_gpu.sh
 ├── phase3-video/
+│   ├── lab1_text_to_video.sh
+│   ├── lab2_image_to_video.sh
+│   ├── lab3_speech_to_video.sh
+│   └── lab4_concurrency_sweep.sh
 ├── phase4-tts/
+│   ├── lab1_voice_clone.sh
+│   ├── lab2_voice_design.sh
+│   ├── lab3_concurrency_cliff.sh
+│   └── lab4_quality_eval.sh
 ├── phase5-actions/
+│   └── lab1_internvla.sh
 ├── phase6-benchmark/
-└── results/              # all benchmark JSON outputs land here
+│   ├── run_all.sh
+│   └── plot_comparison.py
+└── results/
 ```
 
 ## Prerequisites

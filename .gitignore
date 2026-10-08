@@ -1,0 +1,23 @@
+# Benchmark outputs — large JSON files and media
+results/**/*.json
+results/**/*.png
+results/**/*.mp4
+results/**/*.wav
+results/**/*.txt
+!results/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Downloaded assets
+*.jpg
+*.MP3
+*.mp3
+silero_vad.onnx

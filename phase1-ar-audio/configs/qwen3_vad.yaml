@@ -1,0 +1,6 @@
+# Phase 1 Lab 6 — Full-duplex VAD deploy overlay
+# Set server_vad_model_path to the absolute path of your silero_vad.onnx file.
+# Download: huggingface-cli download istupakov/silero-vad-onnx silero_vad.onnx
+base_config: vllm_omni/deploy/qwen3_omni_duplex.yaml
+duplex_session:
+  server_vad_model_path: /path/to/silero_vad.onnx   # <-- UPDATE THIS

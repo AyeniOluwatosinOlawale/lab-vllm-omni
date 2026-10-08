@@ -1,0 +1,7 @@
+# Phase 1 Lab 5 — Default context overlay (32K tokens)
+base_config: vllm_omni/deploy/qwen3_omni_moe.yaml
+stages:
+  - stage_id: 0
+    max_num_batched_tokens: 32768
+    default_sampling_params:
+      max_tokens: 2048

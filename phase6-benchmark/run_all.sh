@@ -141,7 +141,7 @@ stop_server
 # 5. Summary
 # ------------------------------------------------------------------
 echo ""
-echo "=== [5/5] Building summary ==="
+echo "=== [5/6] Building cross-pipeline comparison ==="
 python3 "$(dirname "$0")/plot_comparison.py" \
   --omni-dir       "$RESULTS_DIR/p6_omni" \
   --image-file     "$RESULTS_DIR/p6_image.json" \
@@ -152,8 +152,17 @@ python3 "$(dirname "$0")/plot_comparison.py" \
   --chart          "$RESULTS_DIR/p6_comparison.png"
 
 echo ""
+echo "=== [6/6] Bottleneck analysis — all pipelines ==="
+python3 "$(dirname "$0")/bottleneck_analysis.py" \
+  --results-dir "$RESULTS_DIR" \
+  --output      "$RESULTS_DIR/bottleneck_report.json" \
+  --chart       "$RESULTS_DIR/bottleneck_chart.png"
+
+echo ""
 echo "======================================================="
 echo " Phase 6 complete."
-echo "  Summary JSON: $RESULTS_DIR/p6_summary.json"
-echo "  Chart:        $RESULTS_DIR/p6_comparison.png"
+echo "  Comparison JSON:    $RESULTS_DIR/p6_summary.json"
+echo "  Comparison chart:   $RESULTS_DIR/p6_comparison.png"
+echo "  Bottleneck report:  $RESULTS_DIR/bottleneck_report.json"
+echo "  Bottleneck chart:   $RESULTS_DIR/bottleneck_chart.png"
 echo "======================================================="

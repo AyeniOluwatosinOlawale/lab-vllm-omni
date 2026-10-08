@@ -1,0 +1,12 @@
+# Core — validated against this exact release
+vllm-omni==0.30.0
+
+# Phase 6 analysis scripts
+matplotlib>=3.8.0
+numpy>=1.26.0
+
+# Phase 4 quality eval (WER/SIM/UTMOS)
+jiwer>=3.0.0
+
+# Phase 0 GPU check (already a transitive dep of vllm-omni, listed for clarity)
+torch>=2.4.0

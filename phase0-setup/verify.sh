@@ -28,11 +28,23 @@ else:
         print(f'  GPU {i}: {props.name}  {props.total_memory // 1024**3} GiB')
 "
 
-# 3. vLLM-Omni import
+# 3. vLLM-Omni import + version check
+REQUIRED_VLLM_OMNI="0.30.0"
 echo ""
-echo "[3/5] vLLM-Omni import"
-python3 -c "import vllm_omni; print(f'  vllm_omni version: {vllm_omni.__version__}')" 2>/dev/null \
-  || echo "  WARNING: vllm_omni not installed. Run: pip install vllm-omni"
+echo "[3/5] vLLM-Omni import (required: $REQUIRED_VLLM_OMNI)"
+python3 -c "
+import vllm_omni, sys
+installed = vllm_omni.__version__
+required = '$REQUIRED_VLLM_OMNI'
+print(f'  vllm_omni version: {installed}')
+if installed != required:
+    print(f'  WARNING: version mismatch — expected {required}, got {installed}')
+    print(f'  Fix: pip install vllm-omni=={required}')
+    sys.exit(1)
+else:
+    print(f'  OK: version matches requirements.txt')
+" 2>/dev/null \
+  || echo "  WARNING: vllm_omni not installed. Run: pip install vllm-omni==$REQUIRED_VLLM_OMNI"
 
 # 4. vLLM-Omni collect_env
 echo ""
